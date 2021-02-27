@@ -19,10 +19,12 @@ const Register = () => {
         setEmail('')
     }
 
-    const registerForm = () => <form onSubmit={handleSubmit}>
-        <input type="email" className="form-control" value={email} onChange={e => setEmail(e.target.value)} autoFocus />
-        <button type="submit" className="btn btn-raised">Register</button>
-    </form>
+    const registerForm = () =>
+        <form onSubmit={handleSubmit}>
+            <input type="email" className="form-control" placeholder="Your email" value={email} onChange={e => setEmail(e.target.value)} autoFocus />
+            <br />
+            <button type="submit" className="btn btn-raised">Register</button>
+        </form>
 
     return (
         <div className="container p-5">
