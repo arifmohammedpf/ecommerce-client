@@ -45,7 +45,7 @@ const RegisterComplete = ({ history }) => {
         <input type="email" className="form-control" value={email} disabled />
         <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)} autoFocus placeholder="Enter Password" />
         <br />
-        <button type="submit" className="btn btn-raised">Register</button>
+        <button type="submit" className="btn btn-raised bg-secondary text-white">Register</button>
     </form>
 
     return (

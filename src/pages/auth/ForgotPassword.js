@@ -7,6 +7,14 @@ const ForgotPassword = ({ history }) => {
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState('')
 
+    const { user } = useSelector((state) => ({ ...state }))
+
+    useEffect(() => {
+        if (user && user.token) {
+            history.push('/')
+        }
+    }, [user])
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
@@ -28,12 +36,12 @@ const ForgotPassword = ({ history }) => {
     }
 
     return (
-        <div>
+        <div className="container p-5">
             {loading ? <h4>Loading...</h4> : <h4>Forgot Password</h4>}
             <form onSubmit={handleSubmit}>
                 <input type="email" className='form-control' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='Your Email' autoFocus />
                 <br />
-                <button className='btn btn-raised' disabled={!email}>Submit</button>
+                <button className='btn btn-raised text-white bg-secondary' disabled={!email}>Submit</button>
             </form>
         </div>
     )

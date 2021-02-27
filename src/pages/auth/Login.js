@@ -1,15 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { auth, googleAuthProvider } from '../../firebase'
 import { toast } from 'react-toastify'
 import { Button } from 'antd';
 import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const Login = ({ history }) => {
     const [email, setEmail] = useState('arif.kme16cs012@gmail.com')
     const [password, setPassword] = useState('udemyecommerce')
     const [loading, setLoading] = useState(false)
+
+    const { user } = useSelector((state) => ({ ...state }))
+
+    useEffect(() => {
+        if (user && user.token) {
+            history.push('/')
+        }
+    }, [user])
 
     let dispatch = useDispatch()
 
@@ -73,7 +81,7 @@ const Login = ({ history }) => {
                     {loading ? (<h4 className='text-danger'>Loading...</h4>) : (<h4>Login</h4>)}
                     {loginForm()}
                     <Button onClick={googleLogin} type='submit' className='mb-3' block shape='round' icon={<GoogleOutlined />} size="large">Login with Google</Button>
-                    <Link to="/forgot/password">Forgot Password</Link>
+                    <Link to="/forgot/password" className="text-danger">Forgot Password</Link>
                 </div>
             </div>
         </div>
