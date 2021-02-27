@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { Button } from 'antd';
 import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Login = ({ history }) => {
     const [email, setEmail] = useState('arif.kme16cs012@gmail.com')
@@ -72,6 +73,7 @@ const Login = ({ history }) => {
                     {loading ? (<h4 className='text-danger'>Loading...</h4>) : (<h4>Login</h4>)}
                     {loginForm()}
                     <Button onClick={googleLogin} type='submit' className='mb-3' block shape='round' icon={<GoogleOutlined />} size="large">Login with Google</Button>
+                    <Link to="/forgot/password">Forgot Password</Link>
                 </div>
             </div>
         </div>
