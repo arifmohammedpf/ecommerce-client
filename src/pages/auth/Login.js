@@ -5,6 +5,7 @@ import { Button } from 'antd';
 import { GoogleOutlined, MailOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { createOrUpdateUser } from '../../functions/auth'
 
 const Login = ({ history }) => {
     const [email, setEmail] = useState('arif.kme16cs012@gmail.com')
@@ -29,13 +30,20 @@ const Login = ({ history }) => {
             const { user } = result
             const idTokenResult = await user.getIdTokenResult()
 
-            dispatch({
-                type: "LOGGED_IN_USER",
-                payload: {
-                    email: user.email,
-                    token: idTokenResult.token,
-                }
-            })
+            createOrUpdateUser(idTokenResult.token) //auth check backend function
+                .then((res) => {
+                    dispatch({
+                        type: "LOGGED_IN_USER",
+                        payload: {
+                            name: res.data.name,
+                            email: res.data.email,
+                            token: idTokenResult.token,
+                            role: res.data.role,
+                            _id: res.data._id,
+                        }
+                    })
+                })
+                .catch()
             history.push('/')
         } catch (error) {
             console.log(error);
@@ -50,13 +58,20 @@ const Login = ({ history }) => {
             .then(async (result) => {
                 const { user } = result
                 const idTokenResult = await user.getIdTokenResult()
-                dispatch({
-                    type: "LOGGED_IN_USER",
-                    payload: {
-                        email: user.email,
-                        token: idTokenResult.token,
-                    }
-                })
+                createOrUpdateUser(idTokenResult.token) //auth check backend function
+                    .then((res) => {
+                        dispatch({
+                            type: "LOGGED_IN_USER",
+                            payload: {
+                                name: res.data.name,
+                                email: res.data.email,
+                                token: idTokenResult.token,
+                                role: res.data.role,
+                                _id: res.data._id,
+                            }
+                        })
+                    })
+                    .catch()
                 history.push('/')
             })
             .catch((err) => {
