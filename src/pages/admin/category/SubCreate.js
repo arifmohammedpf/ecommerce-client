@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { getCategories } from "../../../functions/category";
-import { createSub, getSub, removeSub } from "../../../functions/sub";
+import { createSub, getSub, getSubs, removeSub } from "../../../functions/sub";
 import CategoryForm from "../../../components/form/CategoryForm";
 import LocalSearch from "../../../components/form/LocalSearch";
 
@@ -14,15 +14,20 @@ const SubCreate = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState("");
+  const [subs, setSubs] = useState([]);
   //search filter - step 1
   const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     loadCategories();
+    loadSubs();
   }, []);
 
   const loadCategories = () => {
     getCategories().then((catg) => setCategories(catg.data));
+  };
+  const loadSubs = () => {
+    getSubs().then((s) => setSubs(s.data));
   };
 
   const { user } = useSelector((state) => ({ ...state }));
@@ -36,6 +41,7 @@ const SubCreate = () => {
         setLoading(false);
         setName("");
         toast.success(`${res.data.name} is created`);
+        loadSubs();
       })
       .catch((err) => {
         // console.log(err)
@@ -53,6 +59,7 @@ const SubCreate = () => {
         .then((res) => {
           setLoading(false);
           toast.error(`${res.data.name} is deleted`);
+          loadSubs();
         })
         .catch((err) => {
           if (err.response.status === 400) {
@@ -107,22 +114,22 @@ const SubCreate = () => {
           <LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
           {/* step 5 */}
-          {/* {categories.filter(searched(keyword)).map((catg) => (
-            <div className='alert alert-secondary' key={catg._id}>
-              {catg.name}
+          {subs.filter(searched(keyword)).map((s) => (
+            <div className='alert alert-secondary' key={s._id}>
+              {s.name}
               <span
-                onClick={() => handleRemove(catg.slug)}
+                onClick={() => handleRemove(s.slug)}
                 className='btn btn-sm float-right'
               >
                 <DeleteOutlined className='text-danger' />
               </span>
-              <Link to={`/admin/category/${catg.slug}`}>
+              <Link to={`/admin/sub/${s.slug}`}>
                 <span className='btn btn-sm float-right'>
                   <EditOutlined className='text-warning' />
                 </span>
               </Link>
             </div>
-          ))} */}
+          ))}
         </div>
       </div>
     </div>
