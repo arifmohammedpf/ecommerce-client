@@ -5,19 +5,19 @@ import { useSelector } from "react-redux";
 import { createProduct } from "../../../functions/product";
 
 const initialState = {
-  title: "",
-  description: "",
-  price: "",
+  title: "Macbook",
+  description: "Apples product",
+  price: "45000",
   categories: [],
   category: "",
   subs: [],
-  shipping: "",
-  quantity: "",
+  shipping: "Yes",
+  quantity: "50",
   images: [],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
   brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
-  color: "",
-  brand: "",
+  color: "White",
+  brand: "Apple",
 };
 
 const ProductCreate = () => {
@@ -48,7 +48,8 @@ const ProductCreate = () => {
     createProduct(values, user.token)
       .then((res) => {
         console.log(res);
-        toast.success(`${res.data.title} is created`);
+        window.alert(`${res.data.title} is created`);
+        window.location.reload();
       })
       .catch((err) => {
         if (err.response.status === 400) toast.error(err.response.data);
