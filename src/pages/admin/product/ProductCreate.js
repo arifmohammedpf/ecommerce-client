@@ -23,6 +23,9 @@ const initialState = {
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
 
+  //redux
+  const { user } = useSelector((state) => ({ ...state }));
+
   //destructure
   const {
     title,
@@ -42,8 +45,18 @@ const ProductCreate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    createProduct(values, user.token)
+      .then((res) => {
+        console.log(res);
+        toast.success(`${res.data.title} is created`);
+      })
+      .catch((err) => {
+        if (err.response.status === 400) toast.error(err.response.data);
+      });
   };
-  const handleChange = (e) => {};
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
 
   return (
     <div className='container-fluid'>
@@ -149,8 +162,8 @@ const ProductCreate = () => {
                 ))}
               </select>
             </div>
+            <button className='btn btn-outline-info'>Save</button>
           </form>
-          <button className='btn btn-outline-info'>Save</button>
         </div>
       </div>
     </div>
