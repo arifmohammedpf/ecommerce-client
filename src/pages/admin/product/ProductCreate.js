@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { createProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../components/form/ProductCreateForm";
-import { getCategories } from "../../../functions/category";
+import { getCategories, getCategorySubs } from "../../../functions/category";
 
 const initialState = {
   title: "Macbook",
@@ -24,6 +24,7 @@ const initialState = {
 
 const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
+  const [subOptions, setSubOptions] = useState([]);
 
   //redux
   const { user } = useSelector((state) => ({ ...state }));
@@ -54,6 +55,15 @@ const ProductCreate = () => {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+  const handleCategoryChange = (e) => {
+    e.preventDefault();
+    console.log("CLICKED CATEGORY___", e.target.value);
+    setValues({ ...values, category: e.target.value });
+    getCategorySubs(e.target.value).then((res) => {
+      console.log("SUB OPTIONS----", res);
+      setSubOptions(res.data);
+    });
+  };
 
   return (
     <div className='container-fluid'>
@@ -67,6 +77,7 @@ const ProductCreate = () => {
           <ProductCreateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            handleCategoryChange={handleCategoryChange}
             values={values}
           />
         </div>
