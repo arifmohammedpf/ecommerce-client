@@ -5,6 +5,8 @@ const ProductCreateForm = ({
   handleChange,
   handleCategoryChange,
   values,
+  subOptions,
+  showShub,
 }) => {
   //destructure
   const {
@@ -122,6 +124,7 @@ const ProductCreateForm = ({
             ))}
         </select>
       </div>
+      {subOptions ? subOptions.length : "No Subs Yet"}
       <button className='btn btn-outline-info'>Save</button>
     </form>
   );
