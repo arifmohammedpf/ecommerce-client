@@ -10,7 +10,7 @@ const ProductCreateForm = ({
   setValues,
   values,
   subOptions,
-  showShub,
+  showSub,
 }) => {
   //destructure
   const {
@@ -129,20 +129,26 @@ const ProductCreateForm = ({
         </select>
       </div>
 
-      <div>
-        <label>Sub Categories</label>
-        <Select
-          mode='multiple'
-          style={{ width: "100%" }}
-          placeholder='Please Select'
-          value={subs}
-          onChange={(val) => setValues({ ...values, subs: val })}
-        >
-          <Option value='one'>option one</Option>
-          <Option value='two'>option two</Option>
-        </Select>
-      </div>
-
+      {showSub && (
+        <div>
+          <label>Sub Categories</label>
+          <Select
+            mode='multiple'
+            style={{ width: "100%" }}
+            placeholder='Please Select'
+            value={subs}
+            onChange={(val) => setValues({ ...values, subs: val })}
+          >
+            {subOptions.length &&
+              subOptions.map((s) => (
+                <Option key={s._id} value={s._id}>
+                  {s.name}
+                </Option>
+              ))}
+          </Select>
+        </div>
+      )}
+      <br />
       <button className='btn btn-outline-info'>Save</button>
     </form>
   );
