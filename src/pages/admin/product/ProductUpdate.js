@@ -8,8 +8,13 @@ import { getCategories, getCategorySubs } from "../../../functions/category";
 import FileUpload from "../../../components/form/FileUpload";
 import { LoadingOutlined } from "@ant-design/icons";
 
-const ProductUpdate = () => {
+const ProductUpdate = ({ match }) => {
+  //to get slug, can use useParams from react-router-dom or {match} with props (udemy lec.101)
+  //we get match from props since entire app is wrapped in browserRouter. json.stringify(props) for more info
   const [loading, setLoading] = useState(false);
+
+  //router
+  const { slug } = match.params;
 
   //redux
   const { user } = useSelector((state) => ({ ...state }));
