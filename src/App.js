@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 import Home from "./pages/Home";
 import Login from "./pages/auth/Login";
@@ -57,10 +58,25 @@ const App = () => {
     return () => unsubscribe();
   }, [dispatch]);
 
+  const contextClass = {
+    success: "bg-green",
+    error: "bg-red",
+    warning: "bg-yellow",
+    default: "bg-indigo",
+  };
+
   return (
     <>
       <Header />
-      <ToastContainer />
+      <ToastContainer
+        toastClassName={({ type }) =>
+          contextClass[type || "default"] + " toastClass"
+        }
+        bodyClassName={() => "  bodyClass"}
+        position='top-right'
+        transition={Flip}
+        autoClose={4000}
+      />
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/login' component={Login} />

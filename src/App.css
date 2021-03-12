@@ -1,0 +1,30 @@
+.bg-green{
+    background-color: rgba(4, 113, 11);
+}
+.bg-red{
+    background-color: rgba(186, 7, 7);
+}
+.bg-yellow{
+    background-color: rgba(174, 163, 17);
+}
+.bg-indigo{
+    background-color: rgb(37, 13, 169);
+}
+
+.toastClass{
+    position: relative;
+    display: flex;
+    padding: 0.5rem;
+    min-height: 1.2rem;
+    border-radius: 3px;
+    justify-content: space-between;
+    overflow: hidden;
+    cursor: pointer;
+}
+.bodyClass{
+    font-size: medium;
+    color: white;
+    font-weight: normal;
+    display: block;
+    padding: 1rem;
+}
