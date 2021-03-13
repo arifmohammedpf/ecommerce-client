@@ -99,8 +99,19 @@ const ProductUpdate = ({ match }) => {
           <AdminNav />
         </div>
         <div className='col-md-10'>
-          <h4>Product Update</h4>
+          {loading ? (
+            <LoadingOutlined className='text-danger h1' />
+          ) : (
+            <h4>Product Update</h4>
+          )}
           <hr />
+          <div className='p-3'>
+            <FileUpload
+              values={values}
+              setValues={setValues}
+              setLoading={setLoading}
+            />
+          </div>
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
