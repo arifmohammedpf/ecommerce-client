@@ -12,7 +12,6 @@ const initialState = {
   title: "",
   description: "",
   price: "",
-  categories: [],
   category: "",
   subs: [],
   shipping: "",
@@ -28,18 +27,26 @@ const ProductUpdate = ({ match }) => {
   //to get slug, can use useParams from react-router-dom or {match} with props (udemy lec.101)
   //we get match from props since entire app is wrapped in browserRouter. json.stringify(props) for more info
   const [values, setValues] = useState(initialState);
+  const [categories, setCategories] = useState([]);
+  const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
   const [loading, setLoading] = useState(false);
   //router
   const { slug } = match.params;
 
   useEffect(() => {
     loadProduct();
+    loadCategories();
   }, []);
 
   const loadProduct = () => {
     getProduct(slug).then((p) => {
       setValues({ ...values, ...p.data });
     });
+  };
+
+  const loadCategories = () => {
+    getCategories().then((catg) => setCategories(catg.data));
   };
 
   //redux
@@ -50,6 +57,16 @@ const ProductUpdate = ({ match }) => {
   };
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleCategoryChange = (e) => {
+    e.preventDefault();
+    console.log("CLICKED CATEGORY___", e.target.value);
+    setValues({ ...values, subs: [], category: e.target.value });
+    getCategorySubs(e.target.value).then((res) => {
+      console.log("SUB OPTIONS----", res);
+      setSubOptions(res.data);
+    });
+    setShowSub(true);
   };
 
   return (
@@ -64,8 +81,12 @@ const ProductUpdate = ({ match }) => {
           <ProductUpdateForm
             handleSubmit={handleSubmit}
             handleChange={handleChange}
+            handleCategoryChange={handleCategoryChange}
             setValues={setValues}
             values={values}
+            categories={categories}
+            subOptions={subOptions}
+            showSub={showSub}
           />
         </div>
       </div>
