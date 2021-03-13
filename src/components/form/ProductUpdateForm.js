@@ -11,6 +11,8 @@ const ProductUpdateForm = ({
   values,
   categories,
   subOptions,
+  arrayOfSubIds,
+  setArrayOfSubIds,
   showSub,
 }) => {
   //destructure
@@ -135,6 +137,24 @@ const ProductUpdateForm = ({
               </option>
             ))}
         </select>
+      </div>
+
+      <div>
+        <label>Sub Categories</label>
+        <Select
+          mode='multiple'
+          style={{ width: "100%" }}
+          placeholder='Please Select'
+          value={arrayOfSubIds}
+          onChange={(val) => setArrayOfSubIds(val)}
+        >
+          {subOptions.length &&
+            subOptions.map((s) => (
+              <Option key={s._id} value={s._id}>
+                {s.name}
+              </Option>
+            ))}
+        </Select>
       </div>
 
       <br />

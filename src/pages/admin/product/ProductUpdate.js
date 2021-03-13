@@ -29,7 +29,8 @@ const ProductUpdate = ({ match }) => {
   const [values, setValues] = useState(initialState);
   const [categories, setCategories] = useState([]);
   const [subOptions, setSubOptions] = useState([]);
-  const [showSub, setShowSub] = useState(false);
+  const [arrayOfSubIds, setArrayOfSubIds] = useState([]);
+  // const [showSub, setShowSub] = useState(false);
   const [loading, setLoading] = useState(false);
   //router
   const { slug } = match.params;
@@ -41,7 +42,18 @@ const ProductUpdate = ({ match }) => {
 
   const loadProduct = () => {
     getProduct(slug).then((p) => {
+      //1. Load singleproduct
       setValues({ ...values, ...p.data });
+      //2. load singleproduct categry subs
+      getCategorySubs(p.data.category._id).then((res) => {
+        setSubOptions(res.data); //on first load, show default subs
+      });
+      //3. prepare array of sub id's to show as default sub values in antdesign <Select>
+      let arr = [];
+      p.data.subs.map((s) => {
+        arr.push(s._id);
+      });
+      setArrayOfSubIds((prev) => arr); //required for antdesign <Select> to work
     });
   };
 
@@ -66,7 +78,7 @@ const ProductUpdate = ({ match }) => {
       console.log("SUB OPTIONS----", res);
       setSubOptions(res.data);
     });
-    setShowSub(true);
+    // setShowSub(true);
   };
 
   return (
@@ -86,7 +98,9 @@ const ProductUpdate = ({ match }) => {
             values={values}
             categories={categories}
             subOptions={subOptions}
-            showSub={showSub}
+            // showSub={showSub}
+            arrayOfSubIds={arrayOfSubIds}
+            setArrayOfSubIds={setArrayOfSubIds}
           />
         </div>
       </div>
