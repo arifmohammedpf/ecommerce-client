@@ -47,7 +47,7 @@ const NewArrivals = () => {
           <Pagination
             current={page}
             total={(productsCount / 3) * 10}
-            onchange={(value) => setPage(value)}
+            onChange={(value) => setPage(value)}
           />
         </nav>
       </div>
