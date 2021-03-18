@@ -1,4 +1,4 @@
-.slider img {
+.slider img, .card__image {
     height:30rem;
     object-fit: cover;
 }
