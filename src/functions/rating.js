@@ -16,7 +16,14 @@ export const showAverage = (prod) => {
     return (
       <div className='text-center pt-1 pb-3'>
         <span>
-          <StarRating rating={result} />
+          <StarRating
+            starDimension='20px'
+            starSpacing='2px'
+            starRatedColor='red'
+            editing={false}
+            rating={result}
+          />
+          ({prod.ratings.length})
         </span>
       </div>
     );
